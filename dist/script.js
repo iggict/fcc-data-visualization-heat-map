@@ -1,13 +1,13 @@
 /** Set size */
 
 const margin = {
-  top: 80,
+  top: 100,
   right: 20,
-  bottom: 80,
+  bottom: 70,
   left: 80,
 };
 
-const parentWidth = 900;
+const parentWidth = 1000;
 const parentHeight = 500;
 
 const width = parentWidth - margin.left - margin.right;
@@ -53,14 +53,15 @@ const title = graph
   .attr("id", "title")
   .attr("class", "title")
   .attr("x", width / 2)
-  .attr("y", -margin.top / 2 - 15)
+  .attr("y", -margin.top / 2 - 5)
   .text("Monthly Global Land-Surface Temperature");
 
 const subtitle = graph
   .append("text")
+  .attr("id", "description")
   .attr("class", "subtitle")
   .attr("x", width / 2)
-  .attr("y", -margin.top / 2 + 20)
+  .attr("y", -margin.top / 2 + 30)
   // Text will set in data loading
 
 const tooltip = d3
@@ -69,6 +70,23 @@ const tooltip = d3
   .attr("id", "tooltip")
   .attr("class", "tooltip")
 ;
+
+/** Axis labels */
+
+const xLabel = xAxis
+  .append("text")
+  .attr("class", "label")
+  .attr("x", width)
+  .attr("y", 50)
+  .text("Years");
+
+const yLabel = yAxis
+  .append("text")
+  .attr("class", "label")
+  .attr("transform", "rotate(-90)")
+  .attr("x", 0)
+  .attr("y", -45)
+  .text("Months");
 
 /** Load data */
 
