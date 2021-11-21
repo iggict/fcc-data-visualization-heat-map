@@ -38,14 +38,14 @@ const graph = d3
 const xAxis = graph
   .append("g")
   .attr("id", "x-axis")
-  .attr("class", "x-axis")
+  .attr("class", "axis x-axis")
   .attr("transform", `translate(0, ${height})`);
   // call will set in data loading
 
 const yAxis = graph
   .append("g")
   .attr("id", "y-axis")
-  .attr("class", "y-axis");
+  .attr("class", "axis y-axis");
   // call will set in data loading
 
 const title = graph
@@ -61,7 +61,7 @@ const subtitle = graph
   .attr("class", "subtitle")
   .attr("x", width / 2)
   .attr("y", -margin.top / 2 + 20)
-  .text("Base temperature: 8.66℃ (1753 to 2015)");
+  // Text will set in data loading
 
 const tooltip = d3
   .select("body")
@@ -80,12 +80,28 @@ d3.json(JSONFile)
     /** Parse data */
     
     const baseTemp = data.baseTemperature;
-    
+ 
     const dataset = data.monthlyVariance.map(d => (
       {...d, temperature: parseFloat((baseTemp + d.variance).toFixed(3))}
     ));
+  
+    const [minYear, maxYear] = d3.extent(dataset, (d) => d.year);
+    const [minTemp, maxTemp] = d3.extent(dataset, (d) => d.temperature);
     
-    /** Set scales */
+    /** Set subtitle text */
+      
+    subtitle
+      .text(`Base temperature: ${baseTemp}℃ (${minYear} to ${maxYear})`);
+  
+    /** Color Brewer */
+        
+    const colors = d3
+      .scaleQuantize()
+      .domain([minTemp, maxTemp]) 
+      .range(d3.schemeRdYlBu[10].reverse()) // 10 = num of colors
+     ;
+ 
+   /** Set scale domain */
   
     xScale.domain(dataset.map(d => d.year));
     yScale.domain(dataset.map(d => d.month));
@@ -110,6 +126,20 @@ d3.json(JSONFile)
       .axisLeft(yScale)
       .tickFormat(m => monthNumToName(m))
     );
-    
+   
+    /** Set map */
+  
+    const cell = graph
+      .selectAll("rect")
+      .data(dataset)
+      .enter()
+      .append("rect")
+      .attr("class", "cell")
+      .attr("x", (d) => xScale(d.year))
+      .attr("y", (d) => yScale(d.month))
+      .attr("width", (d) => xScale.bandwidth(d.year))
+      .attr("height", (d) => yScale.bandwidth(d.month))
+      .style("fill", (d) => colors(d.temperature))
+      ;
   })
   .catch((err) => console.error(err));  
