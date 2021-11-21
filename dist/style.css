@@ -35,6 +35,19 @@ body {
   background-color: lightgrey; /* TODO: Temporary */
 }
 
+.cell {
+}
+
+.cell:hover {
+  z-index: 50;
+  stroke: #505156;
+  stroke: 1
+}
+
+axis {
+  z-index: 99;
+}
+
 .title {
   color: #1d1e22;
   font-size: 32px;
