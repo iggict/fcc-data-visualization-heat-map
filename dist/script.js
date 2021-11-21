@@ -67,7 +67,8 @@ const tooltip = d3
   .select("body")
   .append("div")
   .attr("id", "tooltip")
-  .attr("class", "tooltip");
+  .attr("class", "tooltip")
+;
 
 /** Load data */
 
@@ -140,6 +141,30 @@ d3.json(JSONFile)
       .attr("width", (d) => xScale.bandwidth(d.year))
       .attr("height", (d) => yScale.bandwidth(d.month))
       .style("fill", (d) => colors(d.temperature))
-      ;
+      .on("mouseover", (event, d) => {
+        tooltip.transition().duration(300).style("opacity", 0.75);
+        
+        const tooltipMargin = 10;
+        
+        const tooltipInnerHtml = (item) => (
+          `<span class="tt-year">${item.year}</span> - 
+           <span class="tt-month">${monthNumToName(item.month)}</span>
+           <br />
+           <span class="tt-temperature">${item.temperature.toFixed(1)}ºC</span>
+           <br />
+           <span class="tt-variance">${item.variance.toFixed(1)}ºC</span>
+            <hr class="tt-color" 
+              style="border-color: ${colors(d.temperature)}"/>`
+        );
+        
+        tooltip
+          .style("top", (event.pageY || event.x) + tooltipMargin + "px")
+          .style("left", (event.pageX || event.y) + tooltipMargin + "px")
+          .attr("transform", `translate(10, 10`)
+          .html(tooltipInnerHtml(d));
+      })
+      .on("mouseout", () => {
+        tooltip.transition().duration(300).style("opacity", 0);
+      });
   })
   .catch((err) => console.error(err));  
