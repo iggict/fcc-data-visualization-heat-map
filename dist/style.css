@@ -59,3 +59,27 @@ axis {
   font-size: 22px;
   text-anchor: middle;
 }
+
+.tooltip {
+  position: absolute;
+  padding: 10px;
+  background: black;
+  /* box-shadow: 1px 1px 5px; */
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  opacity: 0;
+  /* It does not work correctly without this p-e property */
+  pointer-events: none;
+}
+
+.tt-color {
+  border-style: solid;
+  border-width: 4px;
+  border-radius: 2px;
+}
+
+.tt-temperature{
+  font-weight: bold;
+}
+
