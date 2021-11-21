@@ -32,7 +32,10 @@ body {
 }
 
 .graph {
-  background-color: lightgrey; /* TODO: Temporary */
+  /*
+  border: solid 1px black;
+  border-radius: 3px;
+  */  
 }
 
 .cell {
@@ -83,3 +86,8 @@ axis {
   font-weight: bold;
 }
 
+.label {
+  font-size: 1.3rem;
+  fill: #bbbbbb;
+  text-anchor: end;
+}
