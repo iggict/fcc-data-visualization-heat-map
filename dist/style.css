@@ -20,7 +20,6 @@ html {
 body {
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
-  /* background-color: #2f2f2f */
 }
 
 .container {
@@ -32,10 +31,10 @@ body {
 }
 
 .graph {
-  /*
+  /* 
   border: solid 1px black;
-  border-radius: 3px;
-  */  
+  border-radius: 3px; 
+  */
 }
 
 .cell {
@@ -47,7 +46,7 @@ body {
   stroke: 1
 }
 
-axis {
+.axis {
   z-index: 99;
 }
 
@@ -67,7 +66,6 @@ axis {
   position: absolute;
   padding: 10px;
   background: black;
-  /* box-shadow: 1px 1px 5px; */
   border-radius: 5px;
   color: white;
   text-align: center;
